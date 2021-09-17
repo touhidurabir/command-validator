@@ -123,7 +123,7 @@ trait HasCommandValidator {
             $this->error("validation failure for {$validatable}");
 
             foreach ( $errors->get($validatable) as $error ) {
-                ray($error);
+
                 $this->error("    --> {$error}");
             }
         }
