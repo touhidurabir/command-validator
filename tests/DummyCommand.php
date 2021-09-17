@@ -14,7 +14,7 @@ class DummyCommand extends Command {
      *
      * @var string
      */
-    protected $signature = 'run:dummy
+    protected $signature = 'dummy:run
                             {arg    : The command argument}
                             {--opt1= : The command option 1}
                             {--opt2= : The command option 2}';
@@ -55,7 +55,7 @@ class DummyCommand extends Command {
 
         return [
             'arg'   => ['integer', 'required', 'min:100'],
-            'opt1'  => ['integer', 'required', 'max:10'],
+            'opt1'  => ['integer', 'sometimes', 'nullable', 'max:10'],
             'opt2'  => ['sometimes', 'nullable', 'string'],
         ];
     }
