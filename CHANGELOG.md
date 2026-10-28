@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - Fixed fatal error on Laravel 9+ caused by `HasCommandValidator::execute()` missing the `int` return type required by `Illuminate\Console\Command::execute()`.
 - Code style formatted to PSR-12 with Laravel Pint (`composer format` / `composer lint`).
 - Replaced Travis CI with GitHub Actions (PHP 8.2–8.4 × Laravel 11/12/13, plus a code style check).
+- Added `validatables()`, the correctly spelled name of the overridable `validatebales()` method that supplies the data to validate. `validatebales()` still works but is deprecated; when a command overrides both, `validatables()` wins.
 
 
 ## [1.0.0] - 2021-09-17

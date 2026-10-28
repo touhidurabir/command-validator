@@ -115,6 +115,80 @@ class CommandValidatorTest extends TestCase
 
 
     /**
+     * Build a command tester for the given dummy command instance
+     *
+     * @param  \Touhidurabir\CommandValidator\Tests\DummyCommand $command
+     * @return \Symfony\Component\Console\Tester\CommandTester
+     */
+    protected function testerFor(DummyCommand $command)
+    {
+
+        $command->setLaravel($this->app);
+
+        return new CommandTester($command);
+    }
+
+
+    /**
+     * @test
+     */
+    #[Test]
+    public function it_will_validate_the_data_from_overridden_validatables()
+    {
+
+        $tester = $this->testerFor(new class () extends DummyCommand {
+            protected function validatables(): array
+            {
+                return ['arg' => 500];
+            }
+        });
+
+        $this->assertEquals(0, $tester->execute(['arg' => 10]));
+    }
+
+
+    /**
+     * @test
+     */
+    #[Test]
+    public function it_will_still_validate_the_data_from_overridden_misspelled_validatebales()
+    {
+
+        $tester = $this->testerFor(new class () extends DummyCommand {
+            protected function validatebales(): array
+            {
+                return ['arg' => 500];
+            }
+        });
+
+        $this->assertEquals(0, $tester->execute(['arg' => 10]));
+    }
+
+
+    /**
+     * @test
+     */
+    #[Test]
+    public function it_will_prefer_validatables_over_misspelled_validatebales_when_both_overridden()
+    {
+
+        $tester = $this->testerFor(new class () extends DummyCommand {
+            protected function validatables(): array
+            {
+                return ['arg' => 500];
+            }
+
+            protected function validatebales(): array
+            {
+                return ['arg' => 10];
+            }
+        });
+
+        $this->assertEquals(0, $tester->execute(['arg' => 10]));
+    }
+
+
+    /**
      * @test
      */
     #[Test]

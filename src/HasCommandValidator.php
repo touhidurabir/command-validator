@@ -82,7 +82,7 @@ trait HasCommandValidator
     {
 
         $this->validator = Validator::make(
-            $this->validatebales(),
+            $this->validatables(),
             $this->rules(),
             $this->messages(),
             $this->attributes()
@@ -95,6 +95,25 @@ trait HasCommandValidator
     /**
      * Get the data to run the validation on them
      * Generate it form the merge of command arguments and options
+     *
+     * Override this method to customise the validated data. It falls back to
+     * the misspelled validatebales() so existing overrides of it keep working.
+     *
+     * @return array
+     */
+    protected function validatables(): array
+    {
+
+        return $this->validatebales();
+    }
+
+
+    /**
+     * Get the data to run the validation on them
+     * Generate it form the merge of command arguments and options
+     *
+     * @deprecated Misspelled. Override validatables() instead; when both are
+     *             overridden, validatables() wins.
      *
      * @return array
      */
@@ -117,7 +136,7 @@ trait HasCommandValidator
     protected function printValidationErrorsOnConsole(MessageBag $errors)
     {
 
-        foreach ($this->validatebales() as $validatable => $value) {
+        foreach ($this->validatables() as $validatable => $value) {
 
             if (! $errors->has($validatable)) {
 
