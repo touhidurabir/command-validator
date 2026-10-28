@@ -6,7 +6,7 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
+use Touhidurabir\CommandValidator\Exceptions\CommandValidationException;
 
 trait HasCommandValidator
 {
@@ -50,7 +50,7 @@ trait HasCommandValidator
      *
      * @return int
      *
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     * @throws \Touhidurabir\CommandValidator\Exceptions\CommandValidationException
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -59,9 +59,7 @@ trait HasCommandValidator
 
             if (! $this->allowValidationFailureOnConsole()) {
 
-                throw new InvalidArgumentException(
-                    implode(PHP_EOL, $this->validator->errors()->all())
-                );
+                throw new CommandValidationException($this->validator);
             }
 
             $this->printValidationErrorsOnConsole($this->validator->errors());

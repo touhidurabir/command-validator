@@ -4,9 +4,11 @@ namespace Touhidurabir\CommandValidator\Tests;
 
 use PHPUnit\Framework\Attributes\Test;
 use Orchestra\Testbench\TestCase;
+use Illuminate\Support\MessageBag;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Touhidurabir\CommandValidator\CommandValidatorServiceProvider;
+use Touhidurabir\CommandValidator\Exceptions\CommandValidationException;
 
 class CommandValidatorTest extends TestCase
 {
@@ -185,6 +187,43 @@ class CommandValidatorTest extends TestCase
         });
 
         $this->assertEquals(0, $tester->execute(['arg' => 10]));
+    }
+
+
+    /**
+     * @test
+     */
+    #[Test]
+    public function it_will_throw_package_exception_carrying_the_validation_errors()
+    {
+
+        $this->configureTestCommand(false);
+
+        try {
+
+            $this->testableCommand->execute([
+                'arg'       => 10,
+                '--opt1'    => 1000,
+            ]);
+
+            $this->fail('The command validation exception was not thrown.');
+
+        } catch (CommandValidationException $exception) {
+
+            // existing catch blocks for the Symfony exception keep working
+            $this->assertInstanceOf(InvalidArgumentException::class, $exception);
+
+            $errors = $exception->getMessageBag();
+
+            $this->assertInstanceOf(MessageBag::class, $errors);
+            $this->assertTrue($errors->has('arg'));
+            $this->assertTrue($errors->has('opt1'));
+            $this->assertFalse($errors->has('opt2'));
+            $this->assertSame($errors, $exception->getValidator()->errors());
+
+            $this->assertSame(implode(PHP_EOL, $errors->all()), $exception->getMessage());
+            $this->assertStringContainsString('The minimum allowed command argument is 100', $exception->getMessage());
+        }
     }
 
 

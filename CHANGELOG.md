@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Code style formatted to PSR-12 with Laravel Pint (`composer format` / `composer lint`).
 - Replaced Travis CI with GitHub Actions (PHP 8.2–8.4 × Laravel 11/12/13, plus a code style check).
 - Added `validatables()`, the correctly spelled name of the overridable `validatebales()` method that supplies the data to validate. `validatebales()` still works but is deprecated; when a command overrides both, `validatables()` wins.
+- When `allowValidationFailureOnConsole()` returns `false`, validation failures now throw `Touhidurabir\CommandValidator\Exceptions\CommandValidationException`. It extends the previously thrown `Symfony\Component\Console\Exception\InvalidArgumentException` and keeps the same message, so existing `catch` blocks still work, and it exposes the errors via `getMessageBag()` and the validator via `getValidator()`.
 
 
 ## [1.0.0] - 2021-09-17
