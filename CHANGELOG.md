@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 - Laravel 9, 10, 11, 12 and 13 support added (`illuminate/*` up to `^13.0`, `symfony/console` up to `^8.0`).
 - PHPUnit 10, 11 and 12 support for tests; test methods now use `#[Test]` attributes alongside the `@test` annotations.
 - Fixed fatal error on Laravel 9+ caused by `HasCommandValidator::execute()` missing the `int` return type required by `Illuminate\Console\Command::execute()`.
+- Code style formatted to PSR-12 with Laravel Pint (`composer format` / `composer lint`).
+
 
 ## [1.0.0] - 2021-09-17
 - Initial release

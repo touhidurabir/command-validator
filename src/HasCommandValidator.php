@@ -2,16 +2,14 @@
 
 namespace Touhidurabir\CommandValidator;
 
-use Throwable;
 use Illuminate\Support\MessageBag;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 
-trait HasCommandValidator {
-
+trait HasCommandValidator
+{
     /**
      * The command validator instance.
      *
@@ -25,7 +23,8 @@ trait HasCommandValidator {
      *
      * @return array
      */
-    protected function rules(): array {
+    protected function rules(): array
+    {
 
         return [];
     }
@@ -36,7 +35,8 @@ trait HasCommandValidator {
      *
      * @return bool
      */
-    protected function allowValidationFailureOnConsole() {
+    protected function allowValidationFailureOnConsole()
+    {
 
         return true;
     }
@@ -47,16 +47,17 @@ trait HasCommandValidator {
      *
      * @param  object<\Symfony\Component\Console\Input\InputInterface>      $input
      * @param  object<\Symfony\Component\Console\Output\OutputInterface>    $output
-     * 
+     *
      * @return int
-     * 
+     *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int {
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
 
-        if ( !empty($this->rules()) && !$this->validate() ) {
+        if (!empty($this->rules()) && !$this->validate()) {
 
-            if ( ! $this->allowValidationFailureOnConsole() ) {
+            if (! $this->allowValidationFailureOnConsole()) {
 
                 throw new InvalidArgumentException(
                     implode(PHP_EOL, $this->validator->errors()->all())
@@ -77,7 +78,8 @@ trait HasCommandValidator {
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validate() {
+    protected function validate()
+    {
 
         $this->validator = Validator::make(
             $this->validatebales(),
@@ -96,10 +98,11 @@ trait HasCommandValidator {
      *
      * @return array
      */
-    protected function validatebales() : array {
+    protected function validatebales(): array
+    {
 
         return array_filter(array_merge($this->arguments(), $this->options()), function ($value) {
-            
+
             return $value !== null;
         });
     }
@@ -111,18 +114,19 @@ trait HasCommandValidator {
      * @param  object<\Illuminate\Support\MessageBag> $errors
      * @return void
      */
-    protected function printValidationErrorsOnConsole(MessageBag $errors) {
-        
-        foreach( $this->validatebales() as $validatable => $value ) {
+    protected function printValidationErrorsOnConsole(MessageBag $errors)
+    {
 
-            if ( ! $errors->has($validatable) ) {
+        foreach ($this->validatebales() as $validatable => $value) {
+
+            if (! $errors->has($validatable)) {
 
                 continue;
             }
-            
+
             $this->error("validation failure for {$validatable}");
 
-            foreach ( $errors->get($validatable) as $error ) {
+            foreach ($errors->get($validatable) as $error) {
 
                 $this->error("    --> {$error}");
             }
@@ -135,7 +139,8 @@ trait HasCommandValidator {
      *
      * @return array
      */
-    protected function messages(): array {
+    protected function messages(): array
+    {
 
         return [];
     }
@@ -146,7 +151,8 @@ trait HasCommandValidator {
      *
      * @return array
      */
-    protected function attributes(): array {
+    protected function attributes(): array
+    {
 
         return [];
     }

@@ -5,12 +5,11 @@ namespace Touhidurabir\CommandValidator\Tests;
 use PHPUnit\Framework\Attributes\Test;
 use Orchestra\Testbench\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use Touhidurabir\CommandValidator\Tests\DummyCommand;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Touhidurabir\CommandValidator\CommandValidatorServiceProvider;
 
-class CommandValidatorTest extends TestCase {
-
+class CommandValidatorTest extends TestCase
+{
     /**
      * The testable dummy command
      *
@@ -18,14 +17,15 @@ class CommandValidatorTest extends TestCase {
      */
     protected $testableCommand;
 
-    
+
     /**
      * Get package providers.
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @return array
      */
-    protected function getPackageProviders($app) {
+    protected function getPackageProviders($app)
+    {
 
         return [
             CommandValidatorServiceProvider::class,
@@ -33,9 +33,10 @@ class CommandValidatorTest extends TestCase {
     }
 
 
-    protected function configureTestCommand(bool $printErrorOnConsole = true) {
+    protected function configureTestCommand(bool $printErrorOnConsole = true)
+    {
 
-        $command = (new DummyCommand)->configureValidationErrorHandling($printErrorOnConsole);
+        $command = (new DummyCommand())->configureValidationErrorHandling($printErrorOnConsole);
         $command->setLaravel($this->app);
 
         $this->testableCommand = new CommandTester($command);
@@ -47,7 +48,8 @@ class CommandValidatorTest extends TestCase {
      *
      * @return void
      */
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
 
         parent::setUp();
 
@@ -59,7 +61,8 @@ class CommandValidatorTest extends TestCase {
      * @test
      */
     #[Test]
-    public function it_will_fail_if_passed_invalid_data() {
+    public function it_will_fail_if_passed_invalid_data()
+    {
 
         $status = $this->testableCommand->execute([
             'arg'       => 10,
@@ -74,7 +77,8 @@ class CommandValidatorTest extends TestCase {
      * @test
      */
     #[Test]
-    public function it_will_print_errors_on_display() {
+    public function it_will_print_errors_on_display()
+    {
 
         $status = $this->testableCommand->execute([
             'arg'       => 10,
@@ -96,7 +100,8 @@ class CommandValidatorTest extends TestCase {
      * @test
      */
     #[Test]
-    public function it_will_throw_exception_if_instructed_to_when_passed_invalid_data() {
+    public function it_will_throw_exception_if_instructed_to_when_passed_invalid_data()
+    {
 
         $this->configureTestCommand(false);
 
@@ -113,8 +118,9 @@ class CommandValidatorTest extends TestCase {
      * @test
      */
     #[Test]
-    public function it_will_pass_if_proper_data_provided() {
-        
+    public function it_will_pass_if_proper_data_provided()
+    {
+
         $status = $this->testableCommand->execute([
             'arg'       => 100,
             '--opt1'    => 10,

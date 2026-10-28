@@ -36,7 +36,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5||^10.0||^11.0||^12.0",
-        "orchestra/testbench": "^6.21||^7.0||^8.0||^9.0||^10.0||^11.0"
+        "orchestra/testbench": "^6.21||^7.0||^8.0||^9.0||^10.0||^11.0",
+        "laravel/pint": "^1.0"
     },
     "extra": {
         "laravel": {
@@ -44,5 +45,9 @@
                 "Touhidurabir\\CommandValidator\\CommandValidatorServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "format": "pint",
+        "lint": "pint --test"
     }
 }
