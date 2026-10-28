@@ -2,6 +2,7 @@
 
 namespace Touhidurabir\CommandValidator\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use Orchestra\Testbench\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Touhidurabir\CommandValidator\Tests\DummyCommand;
@@ -57,6 +58,7 @@ class CommandValidatorTest extends TestCase {
     /**
      * @test
      */
+    #[Test]
     public function it_will_fail_if_passed_invalid_data() {
 
         $status = $this->testableCommand->execute([
@@ -71,6 +73,7 @@ class CommandValidatorTest extends TestCase {
     /**
      * @test
      */
+    #[Test]
     public function it_will_print_errors_on_display() {
 
         $status = $this->testableCommand->execute([
@@ -92,6 +95,7 @@ class CommandValidatorTest extends TestCase {
     /**
      * @test
      */
+    #[Test]
     public function it_will_throw_exception_if_instructed_to_when_passed_invalid_data() {
 
         $this->configureTestCommand(false);
@@ -108,6 +112,7 @@ class CommandValidatorTest extends TestCase {
     /**
      * @test
      */
+    #[Test]
     public function it_will_pass_if_proper_data_provided() {
         
         $status = $this->testableCommand->execute([

@@ -48,11 +48,11 @@ trait HasCommandValidator {
      * @param  object<\Symfony\Component\Console\Input\InputInterface>      $input
      * @param  object<\Symfony\Component\Console\Output\OutputInterface>    $output
      * 
-     * @return mixed
+     * @return int
      * 
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output): int {
 
         if ( !empty($this->rules()) && !$this->validate() ) {
 
