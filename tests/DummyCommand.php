@@ -5,8 +5,8 @@ namespace Touhidurabir\CommandValidator\Tests;
 use Illuminate\Console\Command;
 use Touhidurabir\CommandValidator\HasCommandValidator;
 
-class DummyCommand extends Command {
-    
+class DummyCommand extends Command
+{
     use HasCommandValidator;
 
     /**
@@ -40,7 +40,8 @@ class DummyCommand extends Command {
      *
      * @return bool
      */
-    protected function allowValidationFailureOnConsole() {
+    protected function allowValidationFailureOnConsole()
+    {
 
         return $this->printValidationErrorsOnConsole;
     }
@@ -51,7 +52,8 @@ class DummyCommand extends Command {
      *
      * @return array
      */
-    protected function rules(): array {
+    protected function rules(): array
+    {
 
         return [
             'arg'   => ['integer', 'required', 'min:100'],
@@ -66,7 +68,8 @@ class DummyCommand extends Command {
      *
      * @return array
      */
-    protected function messages(): array {
+    protected function messages(): array
+    {
 
         return [
             'min' => 'The minimum allowed :attribute is :min',
@@ -80,7 +83,8 @@ class DummyCommand extends Command {
      *
      * @return array
      */
-    protected function attributes(): array {
+    protected function attributes(): array
+    {
 
         return [
             'arg' => 'command argument',
@@ -93,7 +97,8 @@ class DummyCommand extends Command {
      *
      * @return void
      */
-    public function handle() {
+    public function handle()
+    {
 
         $this->info('This is a success.');
     }
@@ -105,7 +110,8 @@ class DummyCommand extends Command {
      * @param  bool $option
      * @return self
      */
-    public function configureValidationErrorHandling(bool $option = true) {
+    public function configureValidationErrorHandling(bool $option = true)
+    {
 
         $this->printValidationErrorsOnConsole = $option;
 

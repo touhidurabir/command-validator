@@ -97,6 +97,8 @@ protected function allowValidationFailureOnConsole() {
 }
 ```
 
+The thrown exception is `Touhidurabir\CommandValidator\Exceptions\CommandValidationException`, which extends Symfony's `Symfony\Component\Console\Exception\InvalidArgumentException`. Use its `getMessageBag()` method to inspect the validation errors.
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
